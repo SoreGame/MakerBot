@@ -10,21 +10,41 @@ longpoll = VkLongPoll(vk)
 
 random_id = 0
 
+global token
+global potreb
+token = 0
+potreb = 0 
+
 def Number():
     write_msg(event.user_id, "Введите номер своего счетчика", random_id)
     global oldAnswer
     oldAnswer = 1
+    if (request == "0001") and (oldAnswer == 1):
+        Pass()
+    else: 
+        write_msg(event.user_id, "Неверный номер счетчика. ",random_id), Number()
 
 def Pass():
     write_msg(event.user_id, "Введите пароль", random_id)
     global oldAnswer
     oldAnswer = 2
+    if (request == "q1w2") and (oldAnswer == 2):
+        Need()
+    else: 
+        write_msg(event.user_id, "Неверный пароль. ", random_id), Pass()
 
 def Need():
     write_msg(event.user_id, "Что вам необходимо? \n 1) Текущие задания \n 2) Колличество токенов на вашем счету")
     global oldAnswer
     oldAnswer = 3
-
+    if (oldAnswer == 3):
+        if (request == 1):
+            TZ()
+        elif (request == 2):
+            Money()
+        else:
+            write_msg(event.user_id, "Такого варианта не существует. ", random_id), Need()
+            
 def TZ():
     global potreb
     write_msg(event.user_id, "Уменьшите потребление электроэнергии на ", potreb, random_id)
@@ -49,15 +69,3 @@ for event in longpoll.listen():
             if (request == "+"):
                 print(event.user_id)
                 Number()
-                if (request == "0001") and (oldAnswer == 1):
-                    Pass()
-                    if (request == "q1w2") and (oldAnswer == 2):
-                        Need()
-                        if (oldAnswer == 3):
-                            if (request == 1):
-                                TZ()
-                            elif(request == 2):
-                                Money()
-                            else: write_msg(event.user_id, "Такого варианта не существует. ", random_id), Need()
-                    else: write_msg(event.user_id, "Неверный пароль. ",random_id), Pass()
-                else: write_msg(event.user_id, "Неверный номер счетчика. ",random_id), Number()
