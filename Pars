@@ -1,0 +1,43 @@
+import vk_api
+from flask import Flask
+from vk_api.longpoll import VkLongPoll, VkEventType
+import random
+
+app = Flask(__name__)
+
+@app.route("/")
+def get():
+    global FirstGet
+    global LastGet
+    FirstGet = request.GET['username']
+    LastGet = request.GET['username']
+
+
+token="048e9cb9ad3f8ef871a788fb1e91a34b8c4ca9bb089e25d3b9d392256adaac591fb554a489a78c5b8b5d0"
+
+less = 5
+
+random_id = 0
+
+vk=vk_api.VkApi(token=token)
+
+longpoll = VkLongPoll(vk)
+
+def write_msg(user_id, message, random_id):
+    vk.method('messages.send', {'user_id': user_id, 'message': message, "random_id":random_id})
+
+for event in longpoll.listen():
+    if event.type == VkEventType.MESSAGE_NEW:
+        if event.to_me:
+            request = event.text
+            print(request)
+            random_id+=1
+            by = msg['user_id']
+            if (less>0):
+                write_msg(event.user_id, "Пожалуйста, пониьте свое  в ближайший час на", less, "K/вт")
+                write_msg(event.user_id, "Просмотреть варанты? (+)")
+                oldAnswer
+            if (request == "+"):
+                print ("НАПИСТАТЬ ВАРИАНТЫ")
+
+
