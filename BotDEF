@@ -48,11 +48,16 @@ for event in longpoll.listen():
             random_id+=1
             if (request == "+"):
                 print(event.user_id)
-                oldAnswer = 0
                 Number()
-                if (request == "0001") and (oldAnswer == 0):
+                if (request == "0001") and (oldAnswer == 1):
                     Pass()
-                    if (request == "q1w2") and (oldAnswer == 1):
-
-
-                else: Number()
+                    if (request == "q1w2") and (oldAnswer == 2):
+                        Need()
+                        if (oldAnswer == 3):
+                            if (request == 1):
+                                TZ()
+                            elif(request == 2):
+                                Money()
+                            else: write_msg(event.user_id, "Такого варианта не существует. ", random_id), Need()
+                    else: write_msg(event.user_id, "Неверный пароль. ",random_id), Pass()
+                else: write_msg(event.user_id, "Неверный номер счетчика. ",random_id), Number()
