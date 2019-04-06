@@ -1,0 +1,56 @@
+import vk_api
+from vk_api.longpoll import VkLongPoll, VkEventType
+import requests
+import bs4
+
+symbols = ['1','2','3','4','5','6','7','8','9','0',',','.']
+
+url = 'http://94.154.11.15'
+r = requests.get(url)
+string = r.text.encode(encoding = 'ascii', errors = 'replace')
+st = list(str(string, 'UTF-8'))
+st.remove('8')
+
+i=0
+while (i<=len(st)):
+    if(i<len(st)):
+        if((st[i] in symbols) == False):
+            st.pop(i)
+            i-=1
+        elif(st[i]==','):
+            st[i]= '.'
+            i+=1
+            string = ''.join(st)
+            less = int(string)
+            print(less)
+
+token="048e9cb9ad3f8ef871a788fb1e91a34b8c4ca9bb089e25d3b9d392256adaac591fb554a489a78c5b8b5d0"
+
+global FirstGet
+global LastGet
+
+random_id = 0
+
+vk=vk_api.VkApi(token=token)
+
+longpoll = VkLongPoll(vk)
+
+def write_msg(user_id, message, random_id):
+    vk.method('messages.send', {'user_id': user_id, 'message': message, "random_id":random_id})
+
+for event in longpoll.listen():
+    if event.type == VkEventType.MESSAGE_NEW:
+        if event.to_me:
+            request = event.text
+            print(request)
+            random_id+=1
+            if (less>0):
+                write_msg(event.user_id, "Пожалуйста, понизьте свое электропотребление в ближайший час на", less, "Вт/с")
+                write_msg(event.user_id, "Просмотреть варанты? (+)")
+            if (request == "+"):
+                print ("НАПИСТАТЬ ВАРИАНТЫ")
+            if
+
+
+
+
